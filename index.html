@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --tinta: #1d2b4a;
+      --papel: #eef1f6;
+      --blanco: #ffffff;
+      --cobalto: #3155e0;
+      --gris: #5c6680;
+      --error: #b3261e;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background: var(--papel);
+      color: var(--tinta);
+      font-family: "Sora", system-ui, sans-serif;
+    }
+    form {
+      width: 100%;
+      max-width: 22rem;
+      background: var(--blanco);
+      border-left: 6px solid var(--cobalto);
+      padding: 2.25rem 2rem;
+    }
+    h1 { font-size: 1.75rem; letter-spacing: -0.02em; }
+    .ayuda { margin-top: .4rem; color: var(--gris); font-size: .95rem; }
+    label { display: block; margin-top: 1.5rem; font-size: .9rem; font-weight: 700; }
+    input {
+      width: 100%;
+      margin-top: .4rem;
+      padding: .75rem .85rem;
+      font: inherit;
+      color: var(--tinta);
+      border: 2px solid #d3d9e6;
+      background: var(--papel);
+    }
+    input:focus { outline: none; border-color: var(--cobalto); background: var(--blanco); }
+    button {
+      width: 100%;
+      margin-top: 1.75rem;
+      padding: .85rem;
+      font: inherit;
+      font-weight: 700;
+      color: var(--blanco);
+      background: var(--tinta);
+      border: 0;
+      cursor: pointer;
+    }
+    button:hover { background: var(--cobalto); }
+    button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 3px; }
+    .error {
+      display: none;
+      margin-top: 1.25rem;
+      padding: .7rem .85rem;
+      font-size: .9rem;
+      color: var(--error);
+      background: #fbeceb;
+    }
+    .error.visible { display: block; }
+  </style>
+</head>
+<body>
+  <form method="POST" action="/login">
+    <h1>Iniciar sesión</h1>
+    <p class="ayuda">Escribe tu usuario y contraseña.</p>
+
+    <p class="error" id="error" role="alert">Usuario o contraseña incorrectos. Revisa los datos e inténtalo otra vez.</p>
+
+    <label for="usuario">Usuario</label>
+    <input id="usuario" name="usuario" type="text" autocomplete="username" required autofocus>
+
+    <label for="clave">Contraseña</label>
+    <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <script>
+    // Si el servidor nos devolvió con ?error=1, mostramos el mensaje
+    if (new URLSearchParams(location.search).has("error")) {
+      document.getElementById("error").classList.add("visible");
+    }
+  </script>
+</body>
+</html>
